@@ -1,0 +1,81 @@
+ion-header {
+  --background: #4CAF50; /* Verde oscuro */
+  --color: white;
+}
+
+ion-toolbar {
+  --background: #4CAF50; /* Verde oscuro */
+  --color: white;
+  text-align: center; /* Centra el texto en el ion-toolbar */
+}
+
+ion-title {
+  font-weight: bold;
+  text-align: center; /* Centra el texto en el ion-title */
+  width: 100%; /* Asegura que el ancho sea del 100% para centrar correctamente */
+}
+
+ion-content {
+  --background: #E8F5E9; /* Verde claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Añade margen superior para centrar el formulario hacia abajo */
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 50px; /* Reduce el espacio entre el logo y los campos del formulario */
+}
+
+.logo-container img {
+  width: 200px; /* Ajusta el tamaño del logo */
+  height: auto;
+}
+
+ion-item {
+  --background: transparent;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+ion-label {
+  color: #388E3C; /* Verde medio */
+}
+
+ion-input {
+  --placeholder-color: #000000;
+  color: #388E3C; /* Verde medio */
+}
+
+ion-button {
+  --background: #4CAF50; /* Verde oscuro */
+  --background-hover: #388E3C; /* Verde medio */
+  --background-activated: #2E7D32; /* Verde más oscuro */
+  --color: white;
+  margin-top: 20px;
+  width: 100%;
+}
+
+ion-button[color="secondary"] {
+  --background: #D32F2F; /* Rojo */
+  --background-hover: #C62828; /* Rojo oscuro */
+  --background-activated: #B71C1C; /* Rojo más oscuro */
+  --color: white;
+  margin-top: 20px; /* Igual que el botón de Login */
+}
+
+ion-label[color="danger"] {
+  color: #D32F2F; /* Rojo */
+}

@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="botani">
+    <ion-title>Tus Plantitas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Plantas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let planta of plantas" (click)="goToGuardadas(planta)">
+        <ion-card class="plant-card">
+          <ion-img [src]="planta.image_url" class="plant-image"></ion-img>
+          <ion-card-header>
+            <ion-card-title>{{ planta.common_name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ planta.description }}</p>
+            <ion-button fill="clear" color="danger" (click)="confirmDeletePlanta(planta.id); $event.stopPropagation()">
+              <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+              Eliminar
+            </ion-button>
+            <ion-button fill="clear" color="primary" (click)="goToPlantasMias(planta); $event.stopPropagation()">
+              <ion-icon slot="icon-only" name="alarm"></ion-icon>
+              Seleccionar Alarma
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button expand="full" (click)="goToAnadir()">Añadir Planta</ion-button>
+</ion-content>

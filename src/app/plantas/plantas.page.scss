@@ -1,0 +1,91 @@
+ion-header {
+  --background: #A8D5BA; /* Verde claro */
+  ion-toolbar {
+    background-color: #6DB892; /* Verde más oscuro para contraste */
+    ion-title {
+      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.5rem; /* Letras más grandes */
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+}
+
+ion-content {
+  --background: #EAF4E3; /* Fondo verde claro */
+  padding: 1rem;
+
+  ion-grid {
+    ion-row {
+      justify-content: center; /* Centrar contenido horizontalmente */
+    }
+  }
+
+  .plant-card {
+    --background: #ffffff; /* Fondo blanco para las cards */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+    height: 400px; /* Altura aumentada para espacio de botones */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .plant-image {
+      height: 200px; /* Altura ajustada para la imagen */
+      object-fit: cover;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    ion-card-header {
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: center;
+
+      ion-card-title {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.2rem;
+        color: #2e7d32;
+      }
+    }
+
+    ion-card-content {
+      padding: 1rem;
+      text-align: center;
+
+      p {
+        flex-grow: 1; /* Permite que el texto tome el espacio disponible */
+      }
+
+      ion-button {
+        --background: transparent;
+        --color: #ff4c4c; /* Color del botón de eliminación */
+        --color-activated: #d32f2f;
+        --color-hover: #d32f2f;
+        display: block;
+        margin: 0.5rem auto;
+      }
+
+      ion-button + ion-button {
+        margin-top: 0.5rem; /* Espaciado entre botones */
+      }
+
+      ion-icon {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  ion-button.expand-full {
+    --background: #43a047; /* Verde más oscuro */
+    --background-activated: #388e3c;
+    --background-focused: #2e7d32;
+    --background-hover: #2e7d32;
+    --color: #ffffff;
+    margin-top: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
