@@ -1,0 +1,25 @@
+ion-toolbar {
+  background-color: var(--ion-color-botani);
+}
+
+ion-title {
+  color: var(--ion-color-botani-contrast);
+}
+
+ion-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.h3 {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

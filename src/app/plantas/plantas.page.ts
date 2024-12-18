@@ -44,9 +44,8 @@ export class PlantasPage implements OnInit {
   }
 
   deletePlanta(id: string) {
-    this.plantas = this.plantas.filter(planta => planta.id !== id);
-    localStorage.setItem('plantas', JSON.stringify(this.plantas));
-    this.loadPlantas();
+    this.plantaService.deletePlanta(id);
+    this.loadPlantas(); // Recargar las plantas después de la eliminación
   }
 
   goToAnadir() {

@@ -20,6 +20,15 @@ export class GuardadasPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadPlanta();
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.loadPlanta();
+      }
+    });
+  }
+
+  loadPlanta() {
     const plantaId = this.route.snapshot.paramMap.get('id');
     if (plantaId) {
       this.planta = this.plantaService.getPlantaById(plantaId);

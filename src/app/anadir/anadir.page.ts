@@ -57,11 +57,9 @@ export class AnadirPage implements OnInit {
       this.planta.image_url = this.photo;
       if (this.isEditMode) {
         this.plantaService.updatePlanta(this.planta);
-        this.showAlert('Éxito', 'Planta actualizada correctamente.');
       } else {
         this.planta.id = this.generateUniqueId();
         this.plantaService.addPlanta({ ...this.planta });
-        this.showAlert('Éxito', 'Planta guardada correctamente.');
       }
       this.router.navigate(['/plantas']);
     } else {

@@ -1,9 +1,7 @@
 ion-header {
-  --background: #A8D5BA; /* Verde claro */
   ion-toolbar {
-    background-color: #6DB892; /* Verde más oscuro para contraste */
     ion-title {
-      color: #ffffff;
+      color: #c8ff00;
       font-family: 'Roboto', sans-serif;
       font-size: 1.5rem; /* Letras más grandes */
       text-transform: uppercase;
@@ -13,7 +11,6 @@ ion-header {
 }
 
 ion-content {
-  --background: #EAF4E3; /* Fondo verde claro */
   padding: 1rem;
 
   ion-grid {
@@ -23,7 +20,7 @@ ion-content {
   }
 
   .plant-card {
-    --background: #ffffff; /* Fondo blanco para las cards */
+    --background: #91ea9d; /* Fondo blanco para las cards */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 1rem 0;
@@ -40,14 +37,14 @@ ion-content {
     }
 
     ion-card-header {
-      background-color: #f7f7f7;
-      border-bottom: 1px solid #e0e0e0;
+      background-color: #9bf08a;
+      border-bottom: 1px solid #e0e0e000;
       text-align: center;
 
       ion-card-title {
         font-family: 'Roboto', sans-serif;
         font-size: 1.2rem;
-        color: #2e7d32;
+        color: #000000;
       }
     }
 

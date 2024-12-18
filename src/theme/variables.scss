@@ -1,10 +1,47 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
 :root {
-	--ion-color-botani: #098624;
-	--ion-color-botani-rgb: 9,134,36;
-	--ion-color-botani-contrast: #ffffff;
-	--ion-color-botani-contrast-rgb: 255,255,255;
-	--ion-color-botani-shade: #539761;
-	--ion-color-botani-tint: #22923a;
+    --ion-content-background: #caf7c7;
+    --ion-color-botani: #098624;
+    --ion-color-botani-rgb: 9,134,36;
+    --ion-color-botani-contrast: #ffffff;
+    --ion-color-botani-contrast-rgb: 255,255,255;
+    --ion-color-botani-shade: #539761;
+    --ion-color-botani-tint: #22923a;
 }
+:root {
+    --ion-label-color: #18d822;
+   --ion-content:#C7F7CD ;
+    --ion-background-color: #C7F7CD;
+    --ion-text-color: #000000;
+    --scroll-bar-bg: #e0e0e0; 
+    --scroll-thumb-bg: #9e9e9e;
+    --input-wrapper-background-color: #e40a0a;
+    --input-wrapper-border-color: #f20d0d; 
+    --input-wrapper-text-color: #000000;
+    --ion-item-background-color: #098624; // Fondo de ion-item en modo claro 
+    --ion-item-text-color: #000000; // Color del texto de ion-item en modo claro
+    --ion-item-border-color: #cccccc;
+  }
+
+  [data-theme="dark"] {
+	--ion-card-content: #ffffff !important;
+    --ion-item-border-color: #ffffff !important;
+    --ion-label-color: #f8f8f8 !important;
+    --ion-background-color: #093500 !important;
+    --ion-text-color: #ffffff !important;
+    --scroll-bar-bg: #187505 !important;
+     --scroll-thumb-bg: #187505 !important;
+     .ion-content-scroll { background-color: var(--ion-background-color);
+     /* Estilos para la barra de desplazamiento / 
+     ::-webkit-scrollbar {
+     width: 12px;
+    background-color: var(--scroll-bar-bg);
+    / Estilos del input wrapper en modo oscuro /
+     --input-wrapper-background-color: #07642b;
+     --input-wrapper-border-color: #000000;
+    --input-wrapper-text-color: #ffffff;
+     } 
+     / Estilos para el pulgar de la barra de desplazamiento /
+      ::-webkit-scrollbar-thumb { background-color: var(--scroll-thumb-bg); border-radius: 6px; } / Estilos para la esquina de la barra de desplazamiento */ ::-webkit-scrollbar-corner { background-color: var(--scroll-bar-bg); } }
+  }

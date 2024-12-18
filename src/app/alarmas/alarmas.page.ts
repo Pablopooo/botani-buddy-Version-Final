@@ -14,40 +14,41 @@ export class AlarmasPage implements OnInit {
 
   ngOnInit() {
     this.loadAlarmas();
-  }
 
-  loadAlarmas() {
-    const savedAlarmas = JSON.parse(localStorage.getItem('alarmas') || '[]');
-    this.alarmas = savedAlarmas;
-    console.log('Alarmas cargadas desde localStorage:', this.alarmas);
-  }
+    // Listener para notificaciones recibidas
+    LocalNotifications.addListener('localNotificationReceived', (notification) => {
+      console.log('Notificación recibida:', notification);
+    });
 
-  async toggleAlarma(id: number, enable: boolean) {
-    const alarma = this.alarmas.find(a => a.id === id);
-    if (alarma) {
-      if (enable) {
-        // Reprogramar la alarma
-        await LocalNotifications.schedule({
-          notifications: [alarma]
-        });
-      } else {
-        // Cancelar la alarma
-        await LocalNotifications.cancel({ notifications: [{ id }] });
-      }
-      // Actualiza el almacenamiento local
-      alarma.enabled = enable;
-      localStorage.setItem('alarmas', JSON.stringify(this.alarmas));
-    }
-    // Evitar el evento no pasivo
-    requestAnimationFrame(() => {
-      this.loadAlarmas();
+    // Listener para acciones de notificaciones
+    LocalNotifications.addListener('localNotificationActionPerformed', (notification) => {
+      console.log('Notificación activada:', notification);
     });
   }
 
-  async confirmDeleteAlarma(id: number) {
+  loadAlarmas() {
+    const storedAlarmas = JSON.parse(localStorage.getItem('alarmas') || '[]');
+    this.alarmas = storedAlarmas.map((alarma: any) => {
+      const days = Array.isArray(alarma.schedule?.on?.weekday) ? alarma.schedule.on.weekday : [alarma.schedule?.on?.weekday];
+      return {
+        id: alarma.id,
+        body: alarma.body,
+        days: this.getDaysFromWeekdays(days),
+        hour: alarma.schedule?.on?.hour !== undefined && alarma.schedule?.on?.minute !== undefined ? 
+              `${alarma.schedule.on.hour.toString().padStart(2, '0')}:${alarma.schedule.on.minute.toString().padStart(2, '0')}` : 'N/A'
+      };
+    });
+  }
+
+  getDaysFromWeekdays(weekday: number[]): string[] {
+    const daysOfWeek = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    return weekday.map(day => daysOfWeek[day]);
+  }
+
+  async deleteAlarma(id: number) {
     const alert = await this.alertController.create({
-      header: 'Confirmar',
-      message: '¿Estás seguro de que quieres eliminar esta alarma?',
+      header: 'Confirmación',
+      message: '¿Estás seguro de que deseas eliminar esta alarma?',
       buttons: [
         {
           text: 'Cancelar',
@@ -56,19 +57,15 @@ export class AlarmasPage implements OnInit {
         {
           text: 'Eliminar',
           handler: () => {
-            this.deleteAlarma(id);
+            this.alarmas = this.alarmas.filter(alarma => alarma.id !== id);
+            localStorage.setItem('alarmas', JSON.stringify(this.alarmas));
+            LocalNotifications.cancel({ notifications: [{ id }] });
+            this.loadAlarmas();
           }
         }
       ]
     });
 
     await alert.present();
-  }
-
-  deleteAlarma(id: number) {
-    this.alarmas = this.alarmas.filter(a => a.id !== id);
-    localStorage.setItem('alarmas', JSON.stringify(this.alarmas));
-    LocalNotifications.cancel({ notifications: [{ id }] });
-    this.loadAlarmas();
   }
 }

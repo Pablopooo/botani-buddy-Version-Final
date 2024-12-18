@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 import { MenuController, NavController } from '@ionic/angular';
+import { ThemeService } from './theme.service';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +18,10 @@ export class AppComponent {
   ];
 
   constructor(
-    public authService: AuthService, // Cambiado a public
+    public authService: AuthService,
     private menuCtrl: MenuController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    public themeService: ThemeService
   ) {}
 
   ngOnInit() {
@@ -28,6 +30,10 @@ export class AppComponent {
 
   toggleMenu() {
     this.menuCtrl.enable(this.authService.isLoggedIn());
+  }
+
+  toggleTheme() { 
+    this.themeService.toggleTheme(); 
   }
 
   logout() {

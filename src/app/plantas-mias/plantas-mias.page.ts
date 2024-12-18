@@ -14,7 +14,6 @@ export class PlantasMiasPage implements OnInit {
   planta: Plant | undefined;
   days: string[] = [];
   hour: string = '08:00'; // Hora por defecto
-  isPeriodic: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +27,7 @@ export class PlantasMiasPage implements OnInit {
       this.planta = this.plantaService.getPlantaById(id);
     }
 
-    // Solicita permisos de notificaciones
+    // Solicitar permisos de notificaciones
     LocalNotifications.requestPermissions().then(permission => {
       if (permission.display === 'granted') {
         console.log('Permisos de notificación otorgados');
@@ -37,50 +36,62 @@ export class PlantasMiasPage implements OnInit {
       }
     });
 
-    // Listener para las notificaciones recibidas
+    // Listener para notificaciones recibidas
     LocalNotifications.addListener('localNotificationReceived', (notification) => {
       console.log('Notificación recibida:', notification);
     });
 
-    // Listener para cuando una notificación es activada
+    // Listener para acciones de notificaciones
     LocalNotifications.addListener('localNotificationActionPerformed', (notification) => {
       console.log('Notificación activada:', notification);
     });
   }
 
   async setAlarm() {
-    console.log('setAlarm called');
-    if (this.planta) {
+    if (this.planta && this.days.length > 0 && this.hour) {
       const [hour, minute] = this.hour.split(':').map(Number);
       if (!isNaN(hour) && !isNaN(minute)) {
-        const dayOfWeek = this.days.map(day => this.getDayOfWeek(day));
-        
-        if (dayOfWeek.length > 0) {
-          const notifications = dayOfWeek.map(day => ({
-            title: 'Es hora de cuidar tu planta',
-            body: 'Es momento de cuidar tu planta ' + (this.planta ? this.planta.common_name : ''),
+        const notifications = this.days.map(day => {
+          const dayOfWeek = this.getDayOfWeek(day);
+          const nextDate = this.getNextDate(dayOfWeek, hour, minute, -5); // 5 minutos antes
+
+          return {
+            title: 'Recordatorio de Riego',
+            body: `En 5 minutos más te corresponde regar tu planta ${this.planta?.common_name}, no te olvides!!!`,
             id: this.generateUniqueId(),
             schedule: {
               on: {
-                weekday: day,
-                hour,
-                minute,
+                weekday: dayOfWeek,
+                hour: hour,
+                minute: minute
               },
-              repeats: this.isPeriodic,
+              at: nextDate,
+              repeats: true
+            },
+            extra: { 
+              enabled: true,
+              plantName: this.planta?.common_name // Guardar el nombre de la planta en 'extra'
             }
-          }));
-          console.log('Notifications:', notifications);
-          await LocalNotifications.schedule({ notifications });
-          console.log(`Alarma configurada para la planta ${this.planta.common_name} a las ${this.hour}`);
-          this.saveAlarmas(notifications);
-          this.showConfirmation();
-        } else {
-          console.error('Seleccione al menos un día.');
-        }
+          };
+        });
+
+        await LocalNotifications.schedule({ notifications });
+        this.saveAlarmas(notifications);
+        this.showConfirmation();
       } else {
-        console.error('Invalid time value:', this.hour);
+        console.error('Hora no válida:', this.hour);
       }
+    } else {
+      console.error('Complete todos los campos para configurar la alarma.');
     }
+  }
+
+  getNextDate(dayOfWeek: number, hour: number, minute: number, offsetMinutes: number): Date {
+    const now = new Date();
+    const nextDate = new Date(now);
+    nextDate.setDate(now.getDate() + ((dayOfWeek + 7 - now.getDay()) % 7));
+    nextDate.setHours(hour, minute + offsetMinutes, 0, 0);
+    return nextDate;
   }
 
   getDayOfWeek(day: string): number {
@@ -106,11 +117,9 @@ export class PlantasMiasPage implements OnInit {
   }
 
   saveAlarmas(notifications: any[]) {
-    console.log('saveAlarmas called with:', notifications);
     const savedAlarmas = JSON.parse(localStorage.getItem('alarmas') || '[]');
     const updatedAlarmas = [...savedAlarmas, ...notifications];
     localStorage.setItem('alarmas', JSON.stringify(updatedAlarmas));
-    console.log('Alarmas guardadas en localStorage:', updatedAlarmas);
   }
 
   async showConfirmation() {
